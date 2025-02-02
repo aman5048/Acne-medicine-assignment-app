@@ -57,11 +57,12 @@ export const ProductList = () => {
         </div>
       </div>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 h-[100vh] overflow-y-scroll px-4 md:px-10 lg:px-20">
-        {products.map((product) => (
-          <div key={product.id} className="my-4 mx-2 ">
-            <Product product={product} />
-          </div>
-        ))}
+        {products &&
+          products.map((product) => (
+            <div key={product.id} className="my-4 mx-2 ">
+              <Product product={product} />
+            </div>
+          ))}
       </div>
     </div>
   );

@@ -1,24 +1,17 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-const fetchProductsByFilter = async (sort) => {
-  console.log("sort", sort);
-  if (sort) {
+export const fetchProductsByFilterAsync = createAsyncThunk(
+  "product/fetchProductsByFilter",
+  async (sort) => {
     const response = await fetch(
-      `https://dummyjson.com/products?sortBy=${sort._sort}&orderBy=${sort._order}`
+      sort
+        ? `https://dummyjson.com/products?sortBy=${sort._sort}&orderBy=${sort._order}`
+        : "https://dummyjson.com/products"
     );
     const data = await response.json();
     console.log("fetch products by filter ", data);
     return data.products;
   }
-  const response = await fetch("https://dummyjson.com/products");
-  const data = await response.json();
-  console.log("fetch products by filter ", data);
-  return data.products;
-};
-
-export const fetchProductsByFilterAsync = createAsyncThunk(
-  "product/fetchProductsByFilter",
-  fetchProductsByFilter
 );
 
 const initialState = {
