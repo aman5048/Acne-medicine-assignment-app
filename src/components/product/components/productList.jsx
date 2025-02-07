@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
-import { selectAllProduct, fetchProductsByFilterAsync } from "../productSlice";
+import {
+  selectAllProduct,
+  fetchProductsByFilterAsync,
+  selectSearch,
+} from "../productSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { Product } from "./product";
 export const ProductList = () => {
@@ -14,18 +18,26 @@ export const ProductList = () => {
     },
   ];
   const [sort, setSort] = useState({});
-
+  const dispatch = useDispatch();
+  const products = useSelector(selectAllProduct);
+  const search = useSelector(selectSearch);
+  console.log("search", search);
   const handleSort = (e, option) => {
+    sortOptions.forEach((option) => (option.current = false));
+    option.current = true;
     const sort = { _sort: option.sort, _order: option.order };
     console.log({ sort });
     setSort(sort);
   };
-  const dispatch = useDispatch();
-  const products = useSelector(selectAllProduct);
+  console.log("products", products);
+
   //   console.log("products", products);
   useEffect(() => {
-    dispatch(fetchProductsByFilterAsync(sort));
-  }, [dispatch, sort]);
+    dispatch(fetchProductsByFilterAsync({ sort, search }));
+  }, [dispatch, sort, search]);
+  // useEffect(() => {
+  //   products = products.filter((product) => product.title.includes(search));
+  // }, [search, products]);
   return (
     <div>
       <div className="flex items-center justify-between max-w-5xl mx-auto mt-6 text-gray-700 mb-6">

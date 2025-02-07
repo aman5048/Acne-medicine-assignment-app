@@ -1,7 +1,15 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { setFilter } from "../product/productSlice";
 
 export const Header = () => {
+  const dispatch = useDispatch();
   const [search, setSearch] = useState(false);
+
+  const handleFilter = (e) => {
+    e.preventDefault();
+    dispatch(setFilter(e.target.value));
+  };
   return (
     <>
       <header className="flex sticky top-0 z-50 items-center justify-between p-4 lg:p-6 bg-white shadow-md">
@@ -30,7 +38,7 @@ export const Header = () => {
               </svg>
             </div>
             <input
-              // onChange={(e) => setFilter(e.target.value)}
+              onChange={(e) => handleFilter(e)}
               type="search"
               id="default-search"
               className="block w-full p-4 ps-10 text-sm text-gray-900 border border-green-300 rounded-lg bg-gray-50 focus:ring-green-500 focus:border-blue-500 dark:bg-grey-700 dark:border-green-600 dark:placeholder-green-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
